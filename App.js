@@ -9,11 +9,19 @@ import {
 } from "react-native";
 import { getWeek, format, getDay, addWeeks, addDays } from "date-fns";
 
-const f = async () => {
-  return fetch(
-    "https://running-reader.netlify.com/.netlify/functions/get-weeks"
-  ).then(result => result.json());
-};
+async function f() {
+  try {
+    const res = await fetch(
+      "https://running-reader.netlify.com/.netlify/functions/get-weeks"
+    );
+    if (!res.ok) {
+      return f();
+    }
+    return res.json();
+  } catch (error) {
+    return f();
+  }
+}
 const App = () => {
   const [date, setDate] = React.useState(new Date());
   const [weeks, setWeeks] = React.useState();
@@ -57,8 +65,10 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   middle: {
+    width: 200,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   mileage: {
     fontSize: 60
