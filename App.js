@@ -39,7 +39,8 @@ const App = () => {
     <View style={styles.container}>
       {weeks ? (
         <>
-          <Text>{format(date, "EEEE MM/dd")}</Text>
+          <Button onPress={reset} title="Reset" />
+          <Text style={styles.date}>{format(date, "EEEE MM/dd")}</Text>
           <View style={styles.middle}>
             <Button title="-1" onPress={() => setDate(addDays(date, -1))} />
             <Text style={styles.mileage}>
@@ -49,7 +50,6 @@ const App = () => {
             <Button title="+1" onPress={() => setDate(addDays(date, 1))} />
           </View>
           <Button onPress={getData} title="Refresh" />
-          <Button onPress={reset} title="Reset" />
         </>
       ) : (
         <ActivityIndicator size="large" />
@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
   },
   mileage: {
     fontSize: 60
+  },
+  date: {
+    fontSize: 30
   }
 });
 
