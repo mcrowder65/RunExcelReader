@@ -35,6 +35,7 @@ const App = () => {
   React.useEffect(() => {
     getData();
   }, []);
+  const week = weeks?.[getWeek(date) - 1];
   return (
     <View style={styles.container}>
       {weeks ? (
@@ -43,10 +44,12 @@ const App = () => {
           <Text style={styles.date}>{format(date, "EEEE MM/dd")}</Text>
           <View style={styles.middle}>
             <Button title="-1" onPress={() => setDate(addDays(date, -1))} />
-            <Text style={styles.mileage}>
-              {weeks?.[getWeek(date) - 1]?.[getDay(date)] ??
-                "Couldn't find anything:("}
-            </Text>
+            <View style={{ alignItems: "center" }}>
+              <Text style={styles.week}>Week: {week?.weekly}</Text>
+              <Text style={styles.mileage}>
+                {week?.[getDay(date)] ?? "Couldn't find anything:("}
+              </Text>
+            </View>
             <Button title="+1" onPress={() => setDate(addDays(date, 1))} />
           </View>
           <Button onPress={getData} title="Refresh" />
@@ -75,6 +78,9 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 30
+  },
+  week: {
+    fontSize: 25
   }
 });
 
